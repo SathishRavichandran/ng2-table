@@ -114,6 +114,22 @@ export class NgTableComponent {
       if (!column) {
         this._columns.push(value);
       }
+      if('key' in value){
+        let column = this._columns.find((col: any) => col.name === value.name
+        );
+        if(column) {
+          let index = this._columns.indexOf(column);
+          this._columns.splice(index, 1)
+        }
+      }
+      if('key' in value && value['key'] == 'add') {
+        let actionValue = this._columns.find((col_prop: any) => col_prop.className === 'actions_header');
+        if(actionValue){
+          let actionIndex = this._columns.indexOf(actionValue);
+          this._columns.splice(actionIndex, 1);
+          this._columns.push(actionValue)
+          }
+      }
     });
 
     this.defineCheckboxesState();
@@ -180,7 +196,7 @@ export class NgTableComponent {
   public handleLinks(action: string, row: any, column: any): void {
     this.linkClicked.emit({ action, row, column });
   }
-   
+
    public checkIsAvailable(row:any, link:any):boolean {
     let result = false;
     if(row.hasOwnProperty('links_to_show')) {
