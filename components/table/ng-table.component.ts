@@ -114,7 +114,7 @@ export class NgTableComponent {
       if (!column) {
         this._columns.push(value);
       }
-      if('key' in value){
+      if('key' in value && value['key'] == 'remove'){
         let column = this._columns.find((col: any) => col.name === value.name
         );
         if(column) {
